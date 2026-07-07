@@ -2,7 +2,7 @@
 ### *India's First Living Loan Intelligence Platform*
 
 [![Tech Stack: FastAPI](https://img.shields.io/badge/Backend-FastAPI-009688?logo=fastapi)](https://fastapi.tiangolo.com)
-[![Frontend: Vanilla JS + D3.js](https://img.shields.io/badge/Frontend-Vanilla_JS_%26_D3.js-F9A03C)](https://d3js.org)
+[![Frontend: HTML/CSS/JS + D3.js](https://img.shields.io/badge/Frontend-HTML%2FCSS%2FJS_%26_D3.js-F9A03C)](https://d3js.org)
 [![Charts: Chart.js](https://img.shields.io/badge/Charts-Chart.js-FF6384?logo=chartdotjs)](https://chartjs.org)
 
 > **Problem:** 80% of India's 63 million MSMEs are financially invisible — no audited statements, no credit history, no collateral. Banks guess. They guess wrong. ₹89,000 Cr in MSME NPAs prove it.
@@ -49,7 +49,7 @@ After the loan is issued, the system doesn't walk away. It watches every transac
 - **Pydantic v2** — Strict data ontology and validation
 - **NumPy / Pandas** — Financial genome computation
 
-### Frontend (Vanilla JS)
+### Frontend (HTML/CSS/JavaScript)
 - **Zero framework** — Pure HTML/CSS/JS for maximum speed
 - **D3.js** — Radar polygon genome map + force-directed network graph
 - **Chart.js** — Heartbeat pulse chart, sweep bar chart, trajectory forecast
