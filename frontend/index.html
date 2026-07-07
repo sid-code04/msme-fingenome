@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="MSME FinGenome — Financial Truth Terminal. Mapping the financial DNA of India's 63M MSMEs through 6-dimensional genome analysis and Living Loan post-disbursement intelligence.">
+    <title>MSME FinGenome — Financial Truth Terminal</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300;0,14..32,400;0,14..32,500;0,14..32,600;0,14..32,700;0,14..32,800;0,14..32,900;1,14..32,400&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/css/styles.css">
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════════════════════
+     LOADING SCREEN
+══════════════════════════════════════════════════════════════ -->
+<div id="loading-screen" class="loading-screen">
+    <div class="loading-content">
+        <div class="dna-helix-loader">
+            <div class="helix-strand strand-1"></div>
+            <div class="helix-strand strand-2"></div>
+            <div class="helix-strand strand-3"></div>
+            <div class="helix-strand strand-4"></div>
+            <div class="helix-strand strand-5"></div>
+            <div class="helix-strand strand-6"></div>
+        </div>
+        <h1 class="loading-title">MSME FinGenome</h1>
+        <p class="loading-subtitle">Sequencing Financial DNA...</p>
+        <div class="loading-bar"><div class="loading-bar-fill"></div></div>
+        <p class="loading-status" id="loading-status">Initializing Genome Engine</p>
+    </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════
+     ONBOARDING MODAL
+══════════════════════════════════════════════════════════════ -->
+<div id="onboard-modal" class="modal hidden">
+    <div class="modal-backdrop" id="close-modal-backdrop"></div>
+    <div class="modal-content">
+        <div class="modal-header">
+            <div class="modal-icon">🧬</div>
+            <h2>Connect New MSME</h2>
+            <p>Mock ULI / Account Aggregator Connection</p>
+            <button class="close-modal" id="close-modal">&times;</button>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <label>GSTIN Number</label>
+                <input type="text" id="mock-gstin" value="27AADCB2230M1Z2" class="mock-input" placeholder="Enter GSTIN">
+            </div>
+            <div class="form-group">
+                <label>Business Name</label>
+                <input type="text" id="mock-name" value="Acme Manufacturing Pvt Ltd" class="mock-input" placeholder="Enter business name">
+            </div>
+            <button class="btn-primary btn-full" id="btn-onboard">
+                <span>Establish ULI Connection &amp; Fetch Data</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </button>
+            <div id="onboard-status" class="onboard-status"></div>
+        </div>
+    </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════
+     MAIN APPLICATION
+══════════════════════════════════════════════════════════════ -->
+<div id="app" class="app hidden">
+
+    <!-- ── Top Navigation ── -->
+    <header class="top-nav" id="top-nav">
+        <div class="nav-inner">
+            <div class="nav-left">
+                <button class="nav-brand" id="home-btn" title="Back to Portfolio">
+                    <div class="brand-icon">🧬</div>
+                    <div class="brand-text">
+                        <span class="brand-name">MSME FinGenome</span>
+                        <span class="brand-tag">Financial Truth Terminal</span>
+                    </div>
+                </button>
+                <nav class="nav-links" id="nav-links">
+                    <button class="nav-link active" id="nav-home" onclick="goHome()">Portfolio</button>
+                    <button class="nav-link hidden" id="nav-profile">
+                        <span class="nav-chevron">›</span>
+                        <span id="nav-profile-name">MSME Detail</span>
+                    </button>
+                </nav>
+            </div>
+            <div class="nav-center">
+                <div class="nav-kpis" id="nav-kpis"><!-- Populated by JS --></div>
+            </div>
+            <div class="nav-right">
+                <div class="search-wrap">
+                    <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+                    <input type="text" id="search-input" class="search-input" placeholder="Search MSMEs, cities, industries...">
+                </div>
+                <button class="btn-connect" id="btn-open-modal">+ Connect MSME</button>
+
+            </div>
+        </div>
+    </header>
+
+    <!-- ══════════════════════════════════════════════════════
+         PAGE 1: HOME / PORTFOLIO
+    ══════════════════════════════════════════════════════ -->
+    <div id="page-home" class="page page-home active">
+
+        <!-- Hero -->
+        <section class="hero-section">
+            <div class="hero-bg-orbs">
+                <div class="orb orb-1"></div>
+                <div class="orb orb-2"></div>
+                <div class="orb orb-3"></div>
+            </div>
+            <div class="hero-content">
+                <div class="hero-label">🧬 MSME Credit Intelligence Platform</div>
+                <h1 class="hero-title">India's First <span class="hero-highlight">Living Loan</span> Intelligence Platform</h1>
+                <p class="hero-subtitle">Decoding the financial DNA of MSMEs — not from documents, but from <strong>real-time transaction behaviour</strong>.</p>
+                <div class="hero-stats" id="hero-stats"><!-- Populated by JS --></div>
+            </div>
+        </section>
+
+        <!-- Filters + Portfolio Grid -->
+        <section class="portfolio-section">
+            <div class="portfolio-toolbar">
+                <div class="toolbar-left">
+                    <h2 class="section-title">MSME Portfolio <span class="section-count" id="portfolio-count"></span></h2>
+                    <div class="filter-group">
+                        <select id="filter-industry" class="filter-select">
+                            <option value="">All Industries</option>
+                        </select>
+                        <select id="filter-grade" class="filter-select">
+                            <option value="">All Grades</option>
+                            <option value="A+">Grade A+</option>
+                            <option value="A">Grade A</option>
+                            <option value="B+">Grade B+</option>
+                            <option value="B">Grade B</option>
+                            <option value="C">Grade C</option>
+                            <option value="D">Grade D</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="toolbar-right">
+                    <div class="view-toggle">
+                        <button class="view-btn active" id="view-grid" title="Grid view">⊞</button>
+                        <button class="view-btn" id="view-list" title="List view">☰</button>
+                    </div>
+                </div>
+            </div>
+            <div class="portfolio-grid" id="portfolio-grid">
+                <!-- Populated by JS -->
+            </div>
+        </section>
+
+    </div><!-- end page-home -->
+
+    <!-- ══════════════════════════════════════════════════════
+         PAGE 2: MSME PROFILE
+    ══════════════════════════════════════════════════════ -->
+    <div id="page-profile" class="page page-profile hidden">
+
+        <!-- Profile Hero -->
+        <div class="profile-hero" id="profile-hero">
+            <!-- Populated by JS -->
+        </div>
+
+        <!-- Phase Tabs -->
+        <div class="profile-tabs-bar">
+            <div class="profile-tabs-inner">
+                <button class="profile-tab active" id="tab-origination" onclick="switchPhase('origination')">
+                    <span class="tab-icon">🔍</span>
+                    <span class="tab-label">Loan Origination</span>
+                    <span class="tab-sub">Pre-Disbursement Analysis</span>
+                </button>
+                <button class="profile-tab" id="tab-lifecycle" onclick="switchPhase('lifecycle')">
+                    <span class="tab-icon">💓</span>
+                    <span class="tab-label">Living Loan Monitor</span>
+                    <span class="tab-sub">Post-Disbursement Intelligence</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- ── Phase 1: Loan Origination ── -->
+        <div id="phase-origination" class="profile-content">
+            <div class="genome-grid">
+
+                <div class="card genome-chart-card" id="genome-chart-card">
+                    <div class="card-header">
+                        <h3>Financial Genome Map</h3>
+                        <span class="card-badge">6 Dimensions</span>
+                    </div>
+                    <div class="genome-chart-container" id="genome-chart-container">
+                        <svg id="genome-radar" width="100%" height="100%"></svg>
+                    </div>
+                </div>
+
+                <div class="card health-card" id="health-card">
+                    <!-- Populated by JS -->
+                </div>
+
+                <div class="card strand-details-card" id="strand-details">
+                    <div class="card-header">
+                        <h3>Genome Strand Analysis</h3>
+                    </div>
+                    <div class="strand-list" id="strand-list">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+
+                <div class="card network-card" id="network-card">
+                    <div class="card-header">
+                        <h3>Economic Network</h3>
+                        <span class="card-badge">Supply Chain Intelligence</span>
+                    </div>
+                    <div class="network-container" id="network-container">
+                        <svg id="network-svg" width="100%" height="100%"></svg>
+                    </div>
+                    <div class="network-metrics" id="network-metrics"></div>
+                </div>
+
+                <div class="card trajectory-card" id="trajectory-card">
+                    <div class="card-header">
+                        <h3>Trajectory Prediction</h3>
+                        <span class="card-badge">24 Month Forecast</span>
+                    </div>
+                    <div class="trajectory-chart-container">
+                        <canvas id="trajectory-chart"></canvas>
+                    </div>
+                </div>
+
+                <div class="card simulator-card" id="simulator-card">
+                    <div class="card-header">
+                        <h3>Stress Test Simulator</h3>
+                        <span class="card-badge">What-If Engine</span>
+                    </div>
+                    <div class="simulator-content">
+                        <div class="slider-group">
+                            <label>Revenue Shock (<span id="rev-val">0</span>%)</label>
+                            <input type="range" id="sim-revenue" min="-60" max="60" value="0" step="5">
+                        </div>
+                        <div class="slider-group">
+                            <label>Cash Flow Shock (<span id="cash-val">0</span>%)</label>
+                            <input type="range" id="sim-cashflow" min="-60" max="60" value="0" step="5">
+                        </div>
+                        <button class="btn-secondary" id="btn-reset-sim">Reset Genome</button>
+                    </div>
+                </div>
+
+                <div class="card insights-card" id="insights-card">
+                    <div class="card-header">
+                        <h3>AI Insights &amp; Recommendations</h3>
+                    </div>
+                    <div class="insights-content" id="insights-content">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+
+            </div>
+        </div><!-- end phase-origination -->
+
+        <!-- ── Phase 2: Living Loan Monitor ── -->
+        <div id="phase-lifecycle" class="profile-content hidden">
+            <div class="lifecycle-grid" id="lifecycle-grid">
+
+                <div class="card loan-status-card" id="loan-status-card">
+                    <!-- Populated by JS -->
+                </div>
+
+                <div class="card heartbeat-card" id="heartbeat-card">
+                    <div class="card-header">
+                        <h3>💓 Genome Heartbeat</h3>
+                        <span class="card-badge">12-Month Daily Pulse</span>
+                    </div>
+                    <div class="heartbeat-chart-container">
+                        <canvas id="heartbeat-chart"></canvas>
+                    </div>
+                    <div class="heartbeat-legend">
+                        <span class="zone-dot green"></span>Green (&gt;75)
+                        <span class="zone-dot yellow"></span>Yellow (55–75)
+                        <span class="zone-dot orange"></span>Orange (40–55)
+                        <span class="zone-dot red"></span>Red (&lt;40)
+                    </div>
+                </div>
+
+                <div class="card sweep-card" id="sweep-card">
+                    <div class="card-header">
+                        <h3>⚡ Transactional Sweep Monitor</h3>
+                        <span class="card-badge">3.5% Auto-Repayment</span>
+                    </div>
+                    <div class="sweep-chart-container">
+                        <canvas id="sweep-chart"></canvas>
+                    </div>
+                    <div class="sweep-accounts" id="sweep-accounts"></div>
+                </div>
+
+                <div class="card alert-timeline-card" id="alert-timeline-card">
+                    <div class="card-header">
+                        <h3>🚨 Intervention Timeline</h3>
+                        <span class="card-badge">Auto-Prevention Log</span>
+                    </div>
+                    <div class="alert-timeline" id="alert-timeline"></div>
+                </div>
+
+                <div class="card npa-counter-card" id="npa-counter-card">
+                    <!-- Populated by JS -->
+                </div>
+
+                <div class="card passport-card" id="passport-card">
+                    <!-- Populated by JS -->
+                </div>
+
+            </div>
+        </div><!-- end phase-lifecycle -->
+
+    </div><!-- end page-profile -->
+
+</div><!-- end app -->
+
+<script src="/assets/js/app.js"></script>
+</body>
+</html>
