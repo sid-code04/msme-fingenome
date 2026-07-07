@@ -598,9 +598,13 @@ function renderHealthCard(genome) {
             </div>
             <div style="padding:16px;background:rgba(0,0,0,0.2);border-radius:10px;">
                 <div style="font-size:0.7rem;text-transform:uppercase;letter-spacing:0.5px;color:var(--text-muted);margin-bottom:10px">Key Insights</div>
-                ${(genome.key_insights || []).slice(0,3).map(i => `
+                ${(genome.strengths || []).slice(0,2).map(i => `
                     <div style="font-size:0.78rem;color:var(--text-secondary);padding:4px 0;border-bottom:1px solid rgba(255,255,255,0.04);line-height:1.5">
-                        ${i}
+                        <span style="color:#4ade80">✓</span> ${i}
+                    </div>`).join('')}
+                ${(genome.risks || []).slice(0,1).map(i => `
+                    <div style="font-size:0.78rem;color:var(--text-secondary);padding:4px 0;border-bottom:1px solid rgba(255,255,255,0.04);line-height:1.5">
+                        <span style="color:#f87171">⚠</span> ${i}
                     </div>`).join('')}
             </div>
         </div>
@@ -767,16 +771,20 @@ function renderTrajectoryChart(genome) {
 // ═══════════════════════════════════════════════════════════════════════════
 
 function renderInsights(genome) {
-    const insights = genome.ai_insights || [];
+    const insights = [];
+    if (genome.strengths) genome.strengths.forEach(s => insights.push({ type: 'positive', title: 'Strength', description: s }));
+    if (genome.risks) genome.risks.forEach(r => insights.push({ type: 'negative', title: 'Risk Factor', description: r }));
+    if (genome.recommendations) genome.recommendations.forEach(r => insights.push({ type: 'neutral', title: 'Recommendation', description: r }));
+
     if (!insights.length) {
         document.getElementById('insights-content').innerHTML =
             `<div style="color:var(--text-muted);font-size:0.85rem">No insights available.</div>`;
         return;
     }
     document.getElementById('insights-content').innerHTML = insights.map(ins => `
-        <div class="insight-item ${ins.type || 'positive'}">
-            <div class="insight-title">${ins.title || ins.category || 'Insight'}</div>
-            <div class="insight-body">${ins.description || ins.text || ''}</div>
+        <div class="insight-item ${ins.type}">
+            <div class="insight-title">${ins.title}</div>
+            <div class="insight-body">${ins.description}</div>
         </div>
     `).join('');
 }
